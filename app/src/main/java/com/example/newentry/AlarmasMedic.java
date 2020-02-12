@@ -7,8 +7,6 @@ public class AlarmasMedic {
     private String nombre_user;
     private String password_user;
     private String time;
-    private Integer batteryLvl;
-    private String isBatteryCharging;
 
     public AlarmasMedic(){
 
@@ -62,19 +60,4 @@ public class AlarmasMedic {
         this.time = time;
     }
 
-    public Integer getBatteryLvl() {
-        return batteryLvl;
-    }
-
-    public void setBatteryLvl(Integer batteryLvl) {
-        this.batteryLvl = batteryLvl;
-    }
-
-    public String getIsBatteryCharging() {
-        return isBatteryCharging;
-    }
-
-    public void setIsBatteryCharging(String isBatteryCharging) {
-        this.isBatteryCharging = isBatteryCharging;
-    }
 }
