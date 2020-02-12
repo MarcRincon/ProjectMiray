@@ -23,10 +23,6 @@
         </receiver>
 
         <activity
-            android:name=".SettingsActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape"></activity>
-        <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape">
