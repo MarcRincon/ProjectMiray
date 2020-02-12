@@ -149,8 +149,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         deviceManager.setUltima_Accion(latestAction);
         deviceManager.setApp_status("Aplicación abierta");
         deviceManager.setLast_check(timeDisplay());
-        deviceManager.setBatteryLvl(percentage);
-        deviceManager.setIsBatteryCharging(batteryConnected);
+        deviceManager.setBattery_lvl(percentage);
+        deviceManager.setDevice_charger(batteryConnected);
 
         reffDevices.setValue(deviceManager);
        /* //** -- OJOestos logs se tienen que borrar OJO -- **
@@ -184,8 +184,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         deviceManager.setUltima_Accion(latestAction);
         deviceManager.setApp_status("Aplicación pausada");
         deviceManager.setLast_check(timeDisplay());
-        deviceManager.setBatteryLvl(percentage);
-        deviceManager.setIsBatteryCharging(batteryConnected);
+        deviceManager.setBattery_lvl(percentage);
+        deviceManager.setDevice_charger(batteryConnected);
 
         reffDevices.setValue(deviceManager);
     }
@@ -208,21 +208,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (id) {
             case R.id.btn_blue:
 
-                alarmasMedic.setTabletnom("TabletB1");
-                alarmasMedic.setIdtablet(8089);
-                alarmasMedic.setAlarmtype("Alarma Azul");
-                alarmasMedic.setNombre_user(user);
+                alarmasMedic.setNom_tablet("TabletB1");
+                alarmasMedic.setID_tablet(8089);
+                alarmasMedic.setTipo_Alarma("Alarma Azul");
+                alarmasMedic.setNom_user(user);
                 alarmasMedic.setPassword_user(pass);
                 alarmasMedic.setTime(timeDisplay());
 
-                deviceManager.setBatteryLvl(percentage);
-                deviceManager.setIsBatteryCharging(batteryConnected);
+                deviceManager.setBattery_lvl(percentage);
+                deviceManager.setDevice_charger(batteryConnected);
                 deviceManager.setLast_check(timeDisplay());
 
               /*  if (batteryCharging){
-                    alarmasMedic.setIsBatteryCharging("Cargador conectado");
+                    alarmasMedic.setDevice_charger("Cargador conectado");
                 } else {
-                    alarmasMedic.setIsBatteryCharging("Cargador desconctado");
+                    alarmasMedic.setDevice_charger("Cargador desconctado");
                 }
 */
                 reff.setValue(alarmasMedic);
@@ -230,20 +230,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(MainActivity.this, "Data inserted", Toast.LENGTH_LONG).show();
                 break;
             case R.id.btn_green:
-                alarmasMedic.setTabletnom("TabletB1");
-                alarmasMedic.setIdtablet(8089);
-                alarmasMedic.setAlarmtype("Alarma Verde");
-                alarmasMedic.setNombre_user(user);
+                alarmasMedic.setNom_tablet("TabletB1");
+                alarmasMedic.setID_tablet(8089);
+                alarmasMedic.setTipo_Alarma("Alarma Verde");
+                alarmasMedic.setNom_user(user);
                 alarmasMedic.setPassword_user(pass);
                 alarmasMedic.setTime(timeDisplay());
 
-                deviceManager.setBatteryLvl(percentage);
-                deviceManager.setIsBatteryCharging(batteryConnected);
+                deviceManager.setBattery_lvl(percentage);
+                deviceManager.setDevice_charger(batteryConnected);
                 deviceManager.setLast_check(timeDisplay());
               /*  if (batteryCharging){
-                    alarmasMedic.setIsBatteryCharging("Cargador conectado");
+                    alarmasMedic.setDevice_charger("Cargador conectado");
                 } else {
-                    alarmasMedic.setIsBatteryCharging("Cargador desconctado");
+                    alarmasMedic.setDevice_charger("Cargador desconctado");
                 }
 */
                 reff.setValue(alarmasMedic);
@@ -251,20 +251,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(MainActivity.this, "Data inserted", Toast.LENGTH_LONG).show();
                 break;
             case R.id.btn_yellow:
-                alarmasMedic.setTabletnom("TabletB1");
-                alarmasMedic.setIdtablet(8089);
-                alarmasMedic.setAlarmtype("Alarma Amarilla");
-                alarmasMedic.setNombre_user(user);
+                alarmasMedic.setNom_tablet("TabletB1");
+                alarmasMedic.setID_tablet(8089);
+                alarmasMedic.setTipo_Alarma("Alarma Amarilla");
+                alarmasMedic.setNom_user(user);
                 alarmasMedic.setPassword_user(pass);
                 alarmasMedic.setTime(timeDisplay());
-                deviceManager.setBatteryLvl(percentage);
-                deviceManager.setIsBatteryCharging(batteryConnected);
+                deviceManager.setBattery_lvl(percentage);
+                deviceManager.setDevice_charger(batteryConnected);
                 deviceManager.setLast_check(timeDisplay());
 
               /*  if (batteryCharging){
-                    alarmasMedic.setIsBatteryCharging("Cargador conectado");
+                    alarmasMedic.setDevice_charger("Cargador conectado");
                 } else {
-                    alarmasMedic.setIsBatteryCharging("Cargador desconctado");
+                    alarmasMedic.setDevice_charger("Cargador desconctado");
                 }
 */
                 reff.setValue(alarmasMedic);
@@ -273,20 +273,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_red:
 
-                alarmasMedic.setTabletnom("TabletB1");
-                alarmasMedic.setIdtablet(8089);
-                alarmasMedic.setAlarmtype("Alarma Roja");
-                alarmasMedic.setNombre_user(user);
+                alarmasMedic.setNom_tablet("TabletB1");
+                alarmasMedic.setID_tablet(8089);
+                alarmasMedic.setTipo_Alarma("Alarma Roja");
+                alarmasMedic.setNom_user(user);
                 alarmasMedic.setPassword_user(pass);
                 alarmasMedic.setTime(timeDisplay());
-                deviceManager.setBatteryLvl(percentage);
-                deviceManager.setIsBatteryCharging(batteryConnected);
+                deviceManager.setBattery_lvl(percentage);
+                deviceManager.setDevice_charger(batteryConnected);
                 deviceManager.setLast_check(timeDisplay());
 
               /*  if (batteryCharging){
-                    alarmasMedic.setIsBatteryCharging("Cargador conectado");
+                    alarmasMedic.setDevice_charger("Cargador conectado");
                 } else {
-                    alarmasMedic.setIsBatteryCharging("Cargador desconctado");
+                    alarmasMedic.setDevice_charger("Cargador desconctado");
                 }
 */
                 reff.setValue(alarmasMedic);

@@ -6,8 +6,8 @@ public class DeviceManager {
     private String App_status;
     private String Ultima_Accion;
     private String Last_check;
-    private Integer BatteryLvl;
-    private String IsBatteryCharging;
+    private Integer Battery_lvl;
+    private String Device_charger;
 
     public DeviceManager(){
 
@@ -54,19 +54,19 @@ public class DeviceManager {
         this.Last_check = last_check;
     }
 
-    public Integer getBatteryLvl() {
-        return BatteryLvl;
+    public Integer getBattery_lvl() {
+        return Battery_lvl;
     }
 
-    public void setBatteryLvl(Integer batteryLvl) {
-        BatteryLvl = batteryLvl;
+    public void setBattery_lvl(Integer battery_lvl) {
+        Battery_lvl = battery_lvl;
     }
 
-    public String getIsBatteryCharging() {
-        return IsBatteryCharging;
+    public String getDevice_charger() {
+        return Device_charger;
     }
 
-    public void setIsBatteryCharging(String isBatteryCharging) {
-        IsBatteryCharging = isBatteryCharging;
+    public void setDevice_charger(String device_charger) {
+        Device_charger = device_charger;
     }
 }

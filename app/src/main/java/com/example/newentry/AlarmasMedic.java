@@ -1,10 +1,10 @@
 package com.example.newentry;
 
 public class AlarmasMedic {
-    private String tabletnom;
-    private Integer idtablet;
-    private String alarmtype;
-    private String nombre_user;
+    private String Nom_tablet;
+    private Integer ID_tablet;
+    private String Tipo_Alarma;
+    private String Nom_user;
     private String password_user;
     private String time;
 
@@ -12,36 +12,36 @@ public class AlarmasMedic {
 
     }
 
-    public String getTabletnom() {
-        return tabletnom;
+    public String getNom_tablet() {
+        return Nom_tablet;
     }
 
-    public void setTabletnom(String tabletnom) {
-        this.tabletnom = tabletnom;
+    public void setNom_tablet(String nom_tablet) {
+        this.Nom_tablet = nom_tablet;
     }
 
-    public Integer getIdtablet() {
-        return idtablet;
+    public Integer getID_tablet() {
+        return ID_tablet;
     }
 
-    public void setIdtablet(Integer idtablet) {
-        this.idtablet = idtablet;
+    public void setID_tablet(Integer ID_tablet) {
+        this.ID_tablet = ID_tablet;
     }
 
-    public String getAlarmtype() {
-        return alarmtype;
+    public String getTipo_Alarma() {
+        return Tipo_Alarma;
     }
 
-    public void setAlarmtype(String alarmtype) {
-        this.alarmtype = alarmtype;
+    public void setTipo_Alarma(String tipo_Alarma) {
+        this.Tipo_Alarma = tipo_Alarma;
     }
 
-    public String getNombre_user() {
-        return nombre_user;
+    public String getNom_user() {
+        return Nom_user;
     }
 
-    public void setNombre_user(String nombre_user) {
-        this.nombre_user = nombre_user;
+    public void setNom_user(String nom_user) {
+        this.Nom_user = nom_user;
     }
 
     public String getPassword_user() {
