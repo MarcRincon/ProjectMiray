@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 
+import java.util.Objects;
+
 import static com.example.newentry.MainActivity.timeDisplay;
 
 public class PlugInControlReceiver extends BroadcastReceiver {
@@ -21,6 +23,7 @@ public class PlugInControlReceiver extends BroadcastReceiver {
     public Integer batteryLvl;
     DeviceManager deviceManager;
     DatabaseReference reffDevices;
+    private final String ACTION_SHUTDOWN = "ACTION_SHUTDOWN";
 
 
     public void onReceive(Context context, Intent intent) {
@@ -88,7 +91,7 @@ public class PlugInControlReceiver extends BroadcastReceiver {
 
             reffDevices.push().setValue(deviceManager);
 
-        } else if (action.equals(Intent.ACTION_REBOOT)){
+        } else if (Objects.requireNonNull(intent.getAction()).contains(ACTION_SHUTDOWN)) {
             SharedPreferences prefs = context.getSharedPreferences(
                     "com.example.newentry", Context.MODE_PRIVATE);
             prefs.edit().putString("deviceStatus","Off").apply();
