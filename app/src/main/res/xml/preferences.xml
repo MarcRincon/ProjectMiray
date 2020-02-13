@@ -28,25 +28,25 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="Contraseña de usuario" />
-     <!--   <EditTextPreference
-            android:defaultValue="Benvingut"
-            android:key="preference_message"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="Posar missatge benvinguda" />
-        <EditTextPreference
-            android:defaultValue="Benvingut"
-            android:key="preference_message"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="Posar missatge benvinguda" />
+        <!--   <EditTextPreference
+               android:defaultValue="Benvingut"
+               android:key="preference_message"
+               android:selectAllOnFocus="true"
+               android:singleLine="true"
+               android:title="Posar missatge benvinguda" />
+           <EditTextPreference
+               android:defaultValue="Benvingut"
+               android:key="preference_message"
+               android:selectAllOnFocus="true"
+               android:singleLine="true"
+               android:title="Posar missatge benvinguda" />
 
-           <MultiSelectListPreference
-               android:entries="@array/pelis"
-               android:entryValues="@array/codipelis"
-               android:key="pref_multilist"
-               android:title="@string/multilistTitle"
-               /> -->
+              <MultiSelectListPreference
+                  android:entries="@array/pelis"
+                  android:entryValues="@array/codipelis"
+                  android:key="pref_multilist"
+                  android:title="@string/multilistTitle"
+                  /> -->
         <!--
                 <ListPreference
                     android:entries="@array/pais"

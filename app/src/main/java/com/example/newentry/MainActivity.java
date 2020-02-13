@@ -109,6 +109,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return currentDate;
     }
 
+    public static String timeDisplayDay() {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyy");
+        String currentDate = format.format(calendar.getTime());
+        return currentDate;
+    }
+
+    public static String timeDisplayHours() {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+        String currentDate = format.format(calendar.getTime());
+        return currentDate;
+    }
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (getCurrentFocus() != null) {
@@ -139,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         String latestAction = sharedPreferences.getString("latestAction", null);
         String batteryConnected = prefs.getString("chargerConnected", "defaultStringIfNothingFound");
-        BatteryManager bm = (BatteryManager)getSystemService(BATTERY_SERVICE);
+        BatteryManager bm = (BatteryManager) getSystemService(BATTERY_SERVICE);
         assert bm != null;
         int percentage = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
 
@@ -174,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String latestAction = sharedPreferences.getString("latestAction", null);
         String batteryConnected = prefs.getString("chargerConnected", "defaultStringIfNothingFound");
-        BatteryManager bm = (BatteryManager)getSystemService(BATTERY_SERVICE);
+        BatteryManager bm = (BatteryManager) getSystemService(BATTERY_SERVICE);
         assert bm != null;
         int percentage = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
 
@@ -200,8 +213,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String database = sharedPreferences.getString("name_db", "Database");
         int actualBattery = prefs.getInt("percentageBattery", -1);
         String batteryConnected = prefs.getString("chargerConnected", "defaultStringIfNothingFound");
-        reff = FirebaseDatabase.getInstance().getReference().child(database).child("Log " + timeDisplay());
-        BatteryManager bm = (BatteryManager)getSystemService(BATTERY_SERVICE);
+        reff = FirebaseDatabase.getInstance().getReference().child(database).child(timeDisplayDay()).child("Log " + timeDisplayHours());
+        BatteryManager bm = (BatteryManager) getSystemService(BATTERY_SERVICE);
         assert bm != null;
         int percentage = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
 

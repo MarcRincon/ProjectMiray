@@ -9,7 +9,7 @@ public class DeviceManager {
     private Integer Battery_lvl;
     private String Device_charger;
 
-    public DeviceManager(){
+    public DeviceManager() {
 
     }
 

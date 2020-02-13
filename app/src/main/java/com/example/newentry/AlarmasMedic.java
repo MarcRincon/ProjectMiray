@@ -8,7 +8,7 @@ public class AlarmasMedic {
     private String password_user;
     private String time;
 
-    public AlarmasMedic(){
+    public AlarmasMedic() {
 
     }
 
