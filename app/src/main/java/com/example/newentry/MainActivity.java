@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.BatteryManager;
@@ -22,6 +23,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
@@ -52,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     DeviceManager deviceManager;
     PlugInControlReceiver plugInControlReceiver;
     BatteryWarnings batteryWarnings;
-
+    ImageView imageEsc;
     IntentFilter intentfilter;
     int deviceStatus;
     String currentBatteryStatus = "Battery Info";
@@ -78,6 +80,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             isPlugged = isPlugged || plugged == BatteryManager.BATTERY_PLUGGED_WIRELESS;
         }
         return isPlugged;
+    }
+
+    public void lockEscape() {
+        stopLockTask();
     }
 
     private BroadcastReceiver batteryInfo = new BroadcastReceiver() {
@@ -106,12 +112,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_green = findViewById(R.id.btn_green);
         btn_options = findViewById(R.id.placeholder_icon);
         btn_red = findViewById(R.id.btn_red);
+        imageEsc = findViewById(R.id.imageView);
 
         btn_green.setOnClickListener(this);
         btn_yellow.setOnClickListener(this);
         btn_blue.setOnClickListener(this);
         btn_red.setOnClickListener(this);
-
+        imageEsc.setOnClickListener(this);
         btn_options.setOnClickListener(this);
 
         registerReceiver(LowBatteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_LOW));
