@@ -2,12 +2,14 @@ package com.example.newentry;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.BatteryManager;
 import android.os.Build;
@@ -16,6 +18,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,14 +42,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // urlMySQL_head: jdbc:sqlserver   driver: com.mysql.jdbc.Driver
     private String urlMySQL_head = "jdbc:jtds:sqlserver://", urlMySQL;
     private String user = "usuario", pass = "usuariopass", db_name;
-
+    Boolean batteryStatusOk = true;
     EditText txtnomtablet, txtidtablet, txttipoalarma;
     Button btnparasave;
     DatabaseReference reff;
     DatabaseReference reffDevices;
+    DatabaseReference reffDevicesWar;
     AlarmasMedic alarmasMedic;
     DeviceManager deviceManager;
     PlugInControlReceiver plugInControlReceiver;
+    BatteryWarnings batteryWarnings;
 
     IntentFilter intentfilter;
     int deviceStatus;
@@ -54,6 +59,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int batteryLevel;
     private Integer count = 0;
 
+    private BroadcastReceiver LowBatteryReceiver = new BroadcastReceiver() {
+        @SuppressLint("MissingPermission")
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Intent intent1 = new Intent(Intent.ACTION_CALL);
+            intent1.setData(Uri.parse("tel:122"));
+            startActivity(intent1);
+        }
+    };
 
     public static boolean isPlugged(Context context) {
         boolean isPlugged = false;
@@ -81,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         alarmasMedic = new AlarmasMedic();
         deviceManager = new DeviceManager();
+        batteryWarnings = new BatteryWarnings();
         plugInControlReceiver = new PlugInControlReceiver();
 
 
@@ -99,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btn_options.setOnClickListener(this);
 
+        registerReceiver(LowBatteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_LOW));
 
     }
 
@@ -136,7 +152,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStart() {
         super.onStart();
-
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        // startLockTask();
         SharedPreferences prefs = this.getSharedPreferences(
                 "com.example.newentry", Context.MODE_PRIVATE);
         if (isPlugged(this)) {
@@ -164,6 +182,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         deviceManager.setLast_check(timeDisplay());
         deviceManager.setBattery_lvl(percentage);
         deviceManager.setDevice_charger(batteryConnected);
+        if (percentage <= 30) {
+            reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child("Tablet B1");
+            batteryWarnings.setBattery_lvl(percentage);
+            batteryWarnings.setId_tablet(8089);
+            batteryWarnings.setLast_check(timeDisplay());
+            batteryWarnings.setNom_tablet("TabletB1");
+            batteryWarnings.setWarning_type("Low Battery");
+            reffDevicesWar.setValue(batteryWarnings);
+        } else if (percentage > 30) {
+            reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child("Tablet B1");
+            reffDevicesWar.setValue(null);
+        }
 
         reffDevices.setValue(deviceManager);
        /* //** -- OJOestos logs se tienen que borrar OJO -- **
@@ -199,7 +229,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         deviceManager.setLast_check(timeDisplay());
         deviceManager.setBattery_lvl(percentage);
         deviceManager.setDevice_charger(batteryConnected);
-
+        if (percentage <= 30) {
+            reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child("Tablet B1");
+            batteryWarnings.setBattery_lvl(percentage);
+            batteryWarnings.setId_tablet(8089);
+            batteryWarnings.setLast_check(timeDisplay());
+            batteryWarnings.setNom_tablet("TabletB1");
+            batteryWarnings.setWarning_type("Low Battery");
+            reffDevicesWar.setValue(batteryWarnings);
+        } else if (percentage > 30) {
+            reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child("Tablet B1");
+            reffDevicesWar.setValue(null);
+        }
         reffDevices.setValue(deviceManager);
     }
 
@@ -238,6 +279,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     alarmasMedic.setDevice_charger("Cargador desconctado");
                 }
 */
+                if (percentage <= 30) {
+                    reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child("Tablet B1");
+                    batteryWarnings.setBattery_lvl(percentage);
+                    batteryWarnings.setId_tablet(8089);
+                    batteryWarnings.setLast_check(timeDisplay());
+                    batteryWarnings.setNom_tablet("TabletB1");
+                    batteryWarnings.setWarning_type("Low Battery");
+                    reffDevicesWar.setValue(batteryWarnings);
+                } else if (percentage > 30) {
+                    reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child("Tablet B1");
+                    reffDevicesWar.setValue(null);
+                }
                 reff.setValue(alarmasMedic);
                 reffDevices.setValue(deviceManager);
                 Toast.makeText(MainActivity.this, "Data inserted", Toast.LENGTH_LONG).show();
@@ -259,6 +312,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     alarmasMedic.setDevice_charger("Cargador desconctado");
                 }
 */
+                if (percentage <= 30) {
+                    reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child("Tablet B1");
+                    batteryWarnings.setBattery_lvl(percentage);
+                    batteryWarnings.setId_tablet(8089);
+                    batteryWarnings.setLast_check(timeDisplay());
+                    batteryWarnings.setNom_tablet("TabletB1");
+                    batteryWarnings.setWarning_type("Low Battery");
+                    reffDevicesWar.setValue(batteryWarnings);
+                } else if (percentage > 30) {
+                    reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child("Tablet B1");
+                    reffDevicesWar.setValue(null);
+                }
                 reff.setValue(alarmasMedic);
                 reffDevices.setValue(deviceManager);
                 Toast.makeText(MainActivity.this, "Data inserted", Toast.LENGTH_LONG).show();
@@ -280,6 +345,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     alarmasMedic.setDevice_charger("Cargador desconctado");
                 }
 */
+                if (percentage <= 30) {
+                    reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child("Tablet B1");
+                    batteryWarnings.setBattery_lvl(percentage);
+                    batteryWarnings.setId_tablet(8089);
+                    batteryWarnings.setLast_check(timeDisplay());
+                    batteryWarnings.setNom_tablet("TabletB1");
+                    batteryWarnings.setWarning_type("Low Battery");
+                    reffDevicesWar.setValue(batteryWarnings);
+                } else if (percentage > 30) {
+                    reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child("Tablet B1");
+                    reffDevicesWar.setValue(null);
+                }
                 reff.setValue(alarmasMedic);
                 reffDevices.setValue(deviceManager);
                 Toast.makeText(MainActivity.this, "Data inserted", Toast.LENGTH_LONG).show();
@@ -302,6 +379,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     alarmasMedic.setDevice_charger("Cargador desconctado");
                 }
 */
+                if (percentage <= 30) {
+                    reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child("Tablet B1");
+                    batteryWarnings.setBattery_lvl(percentage);
+                    batteryWarnings.setId_tablet(8089);
+                    batteryWarnings.setLast_check(timeDisplay());
+                    batteryWarnings.setNom_tablet("TabletB1");
+                    batteryWarnings.setWarning_type("Low Battery");
+                    reffDevicesWar.setValue(batteryWarnings);
+                } else if (percentage > 30) {
+                    reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child("Tablet B1");
+                    reffDevicesWar.setValue(null);
+                }
                 reff.setValue(alarmasMedic);
                 reffDevices.setValue(deviceManager);
                 Toast.makeText(MainActivity.this, "Data inserted", Toast.LENGTH_LONG).show();
