@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         batteryWarnings = new BatteryWarnings();
         plugInControlReceiver = new PlugInControlReceiver();
 
-
+//lfjnkadv
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_main);
         btn_yellow = findViewById(R.id.btn_yellow);
