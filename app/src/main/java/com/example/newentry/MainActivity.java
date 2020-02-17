@@ -3,6 +3,7 @@ package com.example.newentry;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -145,6 +146,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String currentDate = format.format(calendar.getTime());
         return currentDate;
     }
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (getCurrentFocus() != null) {
@@ -159,9 +161,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStart() {
         super.onStart();
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        // startLockTask();
+
         SharedPreferences prefs = this.getSharedPreferences(
                 "com.example.newentry", Context.MODE_PRIVATE);
         if (isPlugged(this)) {
@@ -251,6 +251,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         reffDevices.setValue(deviceManager);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
     @Override
     public void onClick(View v) {
@@ -280,7 +284,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 deviceManager.setDevice_charger(batteryConnected);
                 deviceManager.setLast_check(timeDisplay());
 
-              /*  if (batteryCharging){
+                stopLockTask();
+
+                /*  if (batteryCharging){
                     alarmasMedic.setDevice_charger("Cargador conectado");
                 } else {
                     alarmasMedic.setDevice_charger("Cargador desconctado");
