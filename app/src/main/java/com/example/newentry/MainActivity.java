@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String driver = "net.sourceforge.jtds.jdbc.Driver";
     // urlMySQL_head: jdbc:sqlserver   driver: com.mysql.jdbc.Driver
     private String urlMySQL_head = "jdbc:jtds:sqlserver://", urlMySQL;
-    private String user = "usuario", pass = "usuariopass", db_name;
+    private String user = "usuario", pass = "usuariopass", db_name, tabletName;
     Boolean batteryStatusOk = true;
     EditText txtnomtablet, txtidtablet, txttipoalarma;
     Button btnparasave;
@@ -61,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String currentBatteryStatus = "Battery Info";
     int batteryLevel;
     private Integer count = 0;
+    static Integer idDevice;
+
 
     private BroadcastReceiver LowBatteryReceiver = new BroadcastReceiver() {
         @SuppressLint("MissingPermission")
@@ -174,6 +176,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         db_name = sharedPreferences.getString("name_db", null);
         user = sharedPreferences.getString("user_name", null);
         pass = sharedPreferences.getString("user_pass", null);
+        tabletName = sharedPreferences.getString("tabletName", "Tablet B1");
+        idDevice = Integer.valueOf(sharedPreferences.getString("tabletID", "0"));
 
         String latestAction = sharedPreferences.getString("latestAction", null);
         String batteryConnected = prefs.getString("chargerConnected", "defaultStringIfNothingFound");
@@ -181,24 +185,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         assert bm != null;
         int percentage = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
 
-        reffDevices = FirebaseDatabase.getInstance().getReference().child("Devices Status").child("Tablet B1");
-        deviceManager.setNom_tablet("TabletB1");
-        deviceManager.setID_tablet(8089);
+        reffDevices = FirebaseDatabase.getInstance().getReference().child("Devices Status").child(tabletName);
+        deviceManager.setNom_tablet(tabletName);
+        deviceManager.setID_tablet(idDevice);
         deviceManager.setUltima_Accion(latestAction);
         deviceManager.setApp_status("Aplicación abierta");
         deviceManager.setLast_check(timeDisplay());
         deviceManager.setBattery_lvl(percentage);
         deviceManager.setDevice_charger(batteryConnected);
         if (percentage <= 30) {
-            reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child("Tablet B1");
+            reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child(tabletName);
             batteryWarnings.setBattery_lvl(percentage);
-            batteryWarnings.setId_tablet(8089);
+            batteryWarnings.setId_tablet(idDevice);
             batteryWarnings.setLast_check(timeDisplay());
-            batteryWarnings.setNom_tablet("TabletB1");
+            batteryWarnings.setNom_tablet(tabletName);
             batteryWarnings.setWarning_type("Low Battery");
             reffDevicesWar.setValue(batteryWarnings);
         } else if (percentage > 30) {
-            reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child("Tablet B1");
+            reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child(tabletName);
             reffDevicesWar.setValue(null);
         }
 
@@ -227,25 +231,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         BatteryManager bm = (BatteryManager) getSystemService(BATTERY_SERVICE);
         assert bm != null;
         int percentage = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
+        tabletName = sharedPreferences.getString("tabletName", "Tablet B1");
 
-        reffDevices = FirebaseDatabase.getInstance().getReference().child("Devices Status").child("Tablet B1");
-        deviceManager.setNom_tablet("TabletB1");
-        deviceManager.setID_tablet(8089);
+        reffDevices = FirebaseDatabase.getInstance().getReference().child("Devices Status").child(tabletName);
+        deviceManager.setNom_tablet(tabletName);
+        deviceManager.setID_tablet(idDevice);
         deviceManager.setUltima_Accion(latestAction);
         deviceManager.setApp_status("Aplicación pausada");
         deviceManager.setLast_check(timeDisplay());
         deviceManager.setBattery_lvl(percentage);
         deviceManager.setDevice_charger(batteryConnected);
         if (percentage <= 30) {
-            reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child("Tablet B1");
+            reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child(tabletName);
             batteryWarnings.setBattery_lvl(percentage);
-            batteryWarnings.setId_tablet(8089);
+            batteryWarnings.setId_tablet(idDevice);
             batteryWarnings.setLast_check(timeDisplay());
-            batteryWarnings.setNom_tablet("TabletB1");
+            batteryWarnings.setNom_tablet(tabletName);
             batteryWarnings.setWarning_type("Low Battery");
             reffDevicesWar.setValue(batteryWarnings);
         } else if (percentage > 30) {
-            reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child("Tablet B1");
+            reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child(tabletName);
             reffDevicesWar.setValue(null);
         }
         reffDevices.setValue(deviceManager);
@@ -269,12 +274,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         BatteryManager bm = (BatteryManager) getSystemService(BATTERY_SERVICE);
         assert bm != null;
         int percentage = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
+        tabletName = sharedPreferences.getString("tabletName", "Tablet B1");
+
 
         switch (id) {
             case R.id.btn_blue:
 
-                alarmasMedic.setNom_tablet("TabletB1");
-                alarmasMedic.setID_tablet(8089);
+                alarmasMedic.setNom_tablet(tabletName);
+                alarmasMedic.setID_tablet(idDevice);
                 alarmasMedic.setTipo_Alarma("Alarma Azul");
                 alarmasMedic.setNom_user(user);
                 alarmasMedic.setPassword_user(pass);
@@ -293,15 +300,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
 */
                 if (percentage <= 30) {
-                    reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child("Tablet B1");
+                    reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child(tabletName);
                     batteryWarnings.setBattery_lvl(percentage);
-                    batteryWarnings.setId_tablet(8089);
+                    batteryWarnings.setId_tablet(idDevice);
                     batteryWarnings.setLast_check(timeDisplay());
-                    batteryWarnings.setNom_tablet("TabletB1");
+                    batteryWarnings.setNom_tablet(tabletName);
                     batteryWarnings.setWarning_type("Low Battery");
                     reffDevicesWar.setValue(batteryWarnings);
                 } else if (percentage > 30) {
-                    reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child("Tablet B1");
+                    reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child(tabletName);
                     reffDevicesWar.setValue(null);
                 }
                 reff.setValue(alarmasMedic);
@@ -309,8 +316,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(MainActivity.this, "Data inserted", Toast.LENGTH_LONG).show();
                 break;
             case R.id.btn_green:
-                alarmasMedic.setNom_tablet("TabletB1");
-                alarmasMedic.setID_tablet(8089);
+                alarmasMedic.setNom_tablet(tabletName);
+                alarmasMedic.setID_tablet(idDevice);
                 alarmasMedic.setTipo_Alarma("Alarma Verde");
                 alarmasMedic.setNom_user(user);
                 alarmasMedic.setPassword_user(pass);
@@ -326,15 +333,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
 */
                 if (percentage <= 30) {
-                    reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child("Tablet B1");
+                    reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child(tabletName);
                     batteryWarnings.setBattery_lvl(percentage);
-                    batteryWarnings.setId_tablet(8089);
+                    batteryWarnings.setId_tablet(idDevice);
                     batteryWarnings.setLast_check(timeDisplay());
-                    batteryWarnings.setNom_tablet("TabletB1");
+                    batteryWarnings.setNom_tablet(tabletName);
                     batteryWarnings.setWarning_type("Low Battery");
                     reffDevicesWar.setValue(batteryWarnings);
                 } else if (percentage > 30) {
-                    reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child("Tablet B1");
+                    reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child(tabletName);
                     reffDevicesWar.setValue(null);
                 }
                 reff.setValue(alarmasMedic);
@@ -342,8 +349,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(MainActivity.this, "Data inserted", Toast.LENGTH_LONG).show();
                 break;
             case R.id.btn_yellow:
-                alarmasMedic.setNom_tablet("TabletB1");
-                alarmasMedic.setID_tablet(8089);
+                alarmasMedic.setNom_tablet(tabletName);
+                alarmasMedic.setID_tablet(idDevice);
                 alarmasMedic.setTipo_Alarma("Alarma Amarilla");
                 alarmasMedic.setNom_user(user);
                 alarmasMedic.setPassword_user(pass);
@@ -359,15 +366,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
 */
                 if (percentage <= 30) {
-                    reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child("Tablet B1");
+                    reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child(tabletName);
                     batteryWarnings.setBattery_lvl(percentage);
-                    batteryWarnings.setId_tablet(8089);
+                    batteryWarnings.setId_tablet(idDevice);
                     batteryWarnings.setLast_check(timeDisplay());
-                    batteryWarnings.setNom_tablet("TabletB1");
+                    batteryWarnings.setNom_tablet(tabletName);
                     batteryWarnings.setWarning_type("Low Battery");
                     reffDevicesWar.setValue(batteryWarnings);
                 } else if (percentage > 30) {
-                    reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child("Tablet B1");
+                    reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child(tabletName);
                     reffDevicesWar.setValue(null);
                 }
                 reff.setValue(alarmasMedic);
@@ -376,8 +383,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_red:
 
-                alarmasMedic.setNom_tablet("TabletB1");
-                alarmasMedic.setID_tablet(8089);
+                alarmasMedic.setNom_tablet(tabletName);
+                alarmasMedic.setID_tablet(idDevice);
                 alarmasMedic.setTipo_Alarma("Alarma Roja");
                 alarmasMedic.setNom_user(user);
                 alarmasMedic.setPassword_user(pass);
@@ -393,15 +400,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
 */
                 if (percentage <= 30) {
-                    reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child("Tablet B1");
+                    reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child(tabletName);
                     batteryWarnings.setBattery_lvl(percentage);
-                    batteryWarnings.setId_tablet(8089);
+                    batteryWarnings.setId_tablet(idDevice);
                     batteryWarnings.setLast_check(timeDisplay());
-                    batteryWarnings.setNom_tablet("TabletB1");
+                    batteryWarnings.setNom_tablet(tabletName);
                     batteryWarnings.setWarning_type("Low Battery");
                     reffDevicesWar.setValue(batteryWarnings);
                 } else if (percentage > 30) {
-                    reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child("Tablet B1");
+                    reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child(tabletName);
                     reffDevicesWar.setValue(null);
                 }
                 reff.setValue(alarmasMedic);

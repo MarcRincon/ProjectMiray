@@ -10,7 +10,18 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="Url de la database" />
-
+        <EditTextPreference
+            android:defaultValue="000000"
+            android:key="tabletID"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="ID del disposiivo" />
+        <EditTextPreference
+            android:defaultValue="Tablet1"
+            android:key="tabletName"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Nombre del dispositivo" />
         <EditTextPreference
             android:defaultValue="databaseName"
             android:key="name_db"
@@ -29,6 +40,7 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="Contraseña de usuario" />
+
         <!--   <EditTextPreference
                android:defaultValue="Benvingut"
                android:key="preference_message"
