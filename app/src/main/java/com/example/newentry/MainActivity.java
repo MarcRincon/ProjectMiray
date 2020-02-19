@@ -48,13 +48,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Boolean batteryStatusOk = true;
     EditText txtnomtablet, txtidtablet, txttipoalarma;
     Button btnparasave;
+
     DatabaseReference reff;
     DatabaseReference reffDevices;
     DatabaseReference reffDevicesWar;
+
     AlarmasMedic alarmasMedic;
     DeviceManager deviceManager;
-    PlugInControlReceiver plugInControlReceiver;
     BatteryWarnings batteryWarnings;
+
+    PlugInControlReceiver plugInControlReceiver;
+
     ImageView imageEsc;
     IntentFilter intentfilter;
     int deviceStatus;
@@ -163,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStart() {
         super.onStart();
-
+// servicio
         SharedPreferences prefs = this.getSharedPreferences(
                 "com.example.newentry", Context.MODE_PRIVATE);
         if (isPlugged(this)) {
@@ -171,11 +175,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (!isPlugged(this)) {
             prefs.edit().putString("chargerConnected", "Desconectado").apply();
         }
+        //puede que ya no haga falta ###########
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String urlMySQL = urlMySQL_head + sharedPreferences.getString("url_db", null) + "/";
         db_name = sharedPreferences.getString("name_db", null);
         user = sharedPreferences.getString("user_name", null);
         pass = sharedPreferences.getString("user_pass", null);
+        // #################
         tabletName = sharedPreferences.getString("tabletName", "Tablet B1");
         idDevice = Integer.valueOf(sharedPreferences.getString("tabletID", "0"));
 
@@ -205,14 +211,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child(tabletName);
             reffDevicesWar.setValue(null);
         }
-
         reffDevices.setValue(deviceManager);
-       /* //** -- OJOestos logs se tienen que borrar OJO -- **
-        Log.i("datos",urlMySQL);
-        Log.i("datos",db_name);
-        Log.i("datos",user);
-        Log.i("datos",pass);
-*/
     }
 
     @Override
@@ -231,8 +230,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         BatteryManager bm = (BatteryManager) getSystemService(BATTERY_SERVICE);
         assert bm != null;
         int percentage = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
-        tabletName = sharedPreferences.getString("tabletName", "Tablet B1");
 
+        tabletName = sharedPreferences.getString("tabletName", "Tablet B1");
         reffDevices = FirebaseDatabase.getInstance().getReference().child("Devices Status").child(tabletName);
         deviceManager.setNom_tablet(tabletName);
         deviceManager.setID_tablet(idDevice);
@@ -293,12 +292,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 stopLockTask();
 
-                /*  if (batteryCharging){
-                    alarmasMedic.setDevice_charger("Cargador conectado");
-                } else {
-                    alarmasMedic.setDevice_charger("Cargador desconctado");
-                }
-*/
                 if (percentage <= 30) {
                     reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child(tabletName);
                     batteryWarnings.setBattery_lvl(percentage);
@@ -326,12 +319,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 deviceManager.setBattery_lvl(percentage);
                 deviceManager.setDevice_charger(batteryConnected);
                 deviceManager.setLast_check(timeDisplay());
-              /*  if (batteryCharging){
-                    alarmasMedic.setDevice_charger("Cargador conectado");
-                } else {
-                    alarmasMedic.setDevice_charger("Cargador desconctado");
-                }
-*/
+
                 if (percentage <= 30) {
                     reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child(tabletName);
                     batteryWarnings.setBattery_lvl(percentage);
@@ -359,12 +347,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 deviceManager.setDevice_charger(batteryConnected);
                 deviceManager.setLast_check(timeDisplay());
 
-              /*  if (batteryCharging){
-                    alarmasMedic.setDevice_charger("Cargador conectado");
-                } else {
-                    alarmasMedic.setDevice_charger("Cargador desconctado");
-                }
-*/
                 if (percentage <= 30) {
                     reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child(tabletName);
                     batteryWarnings.setBattery_lvl(percentage);
@@ -393,12 +375,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 deviceManager.setDevice_charger(batteryConnected);
                 deviceManager.setLast_check(timeDisplay());
 
-              /*  if (batteryCharging){
-                    alarmasMedic.setDevice_charger("Cargador conectado");
-                } else {
-                    alarmasMedic.setDevice_charger("Cargador desconctado");
-                }
-*/
                 if (percentage <= 30) {
                     reffDevicesWar = FirebaseDatabase.getInstance().getReference().child("Other Warnings").child(tabletName);
                     batteryWarnings.setBattery_lvl(percentage);
@@ -472,49 +448,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
-
-
-
-/*
-    public boolean conectarMySQL() {
-
-        try {
-
-            Class.forName(driver).newInstance();
-
-            conexionMySQL = DriverManager.getConnection(urlMySQL + "ejemplos", user, pass);
-
-            if (!conexionMySQL.isClosed()) {
-                estadoConexion = true;
-                Toast.makeText(MainActivity.this, "Conexión Establecida", Toast.LENGTH_LONG).show();
-            }
-        } catch (Exception ex) {
-            Toast.makeText(MainActivity.this, "Error al comprobar las credenciales:" + ex.getMessage(), Toast.LENGTH_LONG).show();
-        }
-        return estadoConexion;
-    }
-
-    public void abrirConexion() throws SQLException {
-        Connection conexion;
-        Statement sentencia;
-        //Si el valor devuelto por la función es true, pasaremos los datos de la conexión a la siguiente Activity
-       if (conectarMySQL() == true) {
-        Toast.makeText(this, "Los datos de conexión introducidos son correctos.", Toast.LENGTH_LONG).show();
-
-        String insertQuery = "insert into divice values (30,'tablet4','azul')";
-        try {
-            Class.forName(driver).newInstance();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        }
-        conexion = DriverManager.getConnection(urlMySQL + "ejemplos", user, pass);
-        sentencia = conexion.createStatement();
-        sentencia.executeQuery(insertQuery);
-       }
-    }*/
 }
 
